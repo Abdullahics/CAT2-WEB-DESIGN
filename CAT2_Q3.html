@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Pay Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            padding: 8px;
+            width: calc(100% - 20px);
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input[readonly] {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Pay Calculator</h1>
+        <form id="payForm">
+            <label for="employeeName">Employee Name:</label>
+            <input type="text" id="employeeName" required><br><br>
+
+            <label for="hoursWorked">Hours Worked:</label>
+            <input type="number" id="hoursWorked" min="0" required><br><br>
+
+            <label for="ratePerHour">Rate per Hour (ksh):</label>
+            <input type="number" id="ratePerHour" min="0" required><br><br>
+
+            <button type="button" onclick="calculatePay()">Calculate Pay</button><br><br>
+
+            <label for="basicPay">Basic Pay (ksh):</label>
+            <input type="text" id="basicPay" readonly><br><br>
+
+            <label for="tax">Tax (ksh):</label>
+            <input type="text" id="tax" readonly><br><br>
+
+            <label for="netPay">Net Pay (ksh):</label>
+            <input type="text" id="netPay" readonly><br><br>
+        </form>
+    </div>
+
+    <script>
+        function calculatePay() {
+          
+            var employeeName = document.getElementById('employeeName').value;
+            var hoursWorked = parseFloat(document.getElementById('hoursWorked').value);
+            var ratePerHour = parseFloat(document.getElementById('ratePerHour').value);
+
+            var basicPay = hoursWorked * ratePerHour;
+
+    
+            var tax = 0;
+            if (basicPay > 50000) {
+                tax = 0.2 * basicPay; // 20% tax
+            } else if (basicPay >= 20000 && basicPay <= 50000) {
+                tax = 0.1 * basicPay; // 10% tax
+            } else {
+                tax = 0; // No tax
+            }
+
+            
+            var netPay = basicPay - tax;
+
+            document.getElementById('basicPay').value = basicPay.toFixed(2);
+            document.getElementById('tax').value = tax.toFixed(2);
+            document.getElementById('netPay').value = netPay.toFixed(2);
+        }
+    </script>
+</body>
+</html>
